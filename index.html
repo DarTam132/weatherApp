@@ -4,6 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
     <link rel="stylesheet" href="style.css" />
     <script defer src="app.js"></script>
     <title>Weather App</title>
@@ -33,7 +45,7 @@
           </div>
           <div class="city-coords">
             <div class="city"></div>
-            <div class="map">Aici vine harta</div>
+            <div id="map">Aici vine harta</div>
           </div>
         </div>
         <div class="forecast">

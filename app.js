@@ -5,11 +5,26 @@ const wkDay = document.querySelector(".week-day");
 const mainTemp = document.querySelector(".temp");
 const windSpeed = document.querySelector(".wind-integer");
 const humidity = document.querySelector(".hum-integer");
+// const map = document.querySelector(".map");
 
 const getPosition = () => {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
+};
+
+const renderMap = async () => {
+  const curLoc = await getPosition();
+  const { latitude: lat, longitude: lng } = curLoc.coords;
+  coords = [lat, lng];
+  const map = L.map("map").setView(coords, 12);
+
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  L.marker(coords).addTo(map);
 };
 
 window.addEventListener(
@@ -48,14 +63,17 @@ window.addEventListener(
     mainTemp.innerHTML = `<span>${Math.trunc(
       curRes.main.temp - 273.15
     )}</span><sup>o</sup>`;
-    windSpeed.innerText = curRes.wind.speed * 3.6;
+
+    windSpeed.innerText = String(curRes.wind.speed * 3.6).substring(0, 4);
     humidity.innerText = `${curRes.main.humidity} %`;
     console.log(curRes);
+    renderMap();
+
     return res;
   })
 );
 
-const bos = (async () => {
-  const final = await wetherLocation();
-  // console.log(final);
-})();
+// const bos = (async () => {
+//   const final = await wetherLocation();
+//   // console.log(final);
+// })();

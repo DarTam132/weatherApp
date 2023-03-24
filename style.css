@@ -140,7 +140,7 @@ ul {
   font-size: 60px;
 }
 
-.map {
+#map {
   background-color: #3f87a6;
   width: 450px;
   height: 300px;
