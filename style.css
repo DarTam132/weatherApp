@@ -15,11 +15,11 @@
   align-items: center;
 }
 
-form {
+.form {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5% auto 50px auto;
+  margin: 25px auto 50px auto;
   height: 100px;
   width: 350px;
   background-color: #f69c3c90;
@@ -32,12 +32,13 @@ form {
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   border: none;
-  font-size: 17px;
+  font-size: 20px;
+  text-align: center;
 }
 
 .search-city::placeholder {
   text-align: center;
-  font-size: 17px;
+  font-size: 20px;
 }
 
 .btn {
@@ -53,10 +54,6 @@ form {
   background-color: #f69c3c90;
   height: 49px;
   border: solid 1px #000;
-}
-
-ul {
-  all: none;
 }
 
 .actual {
@@ -149,7 +146,7 @@ ul {
 ul {
   list-style: none;
   color: #fff;
-  font-size: 40px;
+  font-size: 25px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -157,5 +154,9 @@ ul {
 }
 
 li {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
 }
