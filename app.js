@@ -21,7 +21,7 @@ const options = {
   timeZone: "UTC",
 };
 
-function curentLocalisation() {
+function currentLocalisation() {
   navigator.geolocation.getCurrentPosition((position) => {
     lat = position.coords.latitude;
     lng = position.coords.longitude;
@@ -29,28 +29,42 @@ function curentLocalisation() {
     renderMap(lat, lng);
   });
 }
+
 const customLocation = async (city) => {
-  city = input.value;
-  const customLoc = await fetch(`
-  https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiID}
-  `);
-  const finalData = await customLoc.json();
-  const customCoords = [finalData.coord.lat, finalData.coord.lon];
-  wetherLocation(customCoords[0], customCoords[1]);
-  renderMap(customCoords[0], customCoords[1]);
+  try {
+    city = input.value;
+    const customLoc = await fetch(`
+    https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiID}
+    `);
+    const finalData = await customLoc.json();
+    const customCoords = [finalData.coord.lat, finalData.coord.lon];
+    wetherLocation(customCoords[0], customCoords[1]);
+    renderMap(customCoords[0], customCoords[1]);
+  } catch {
+    alert("You have to enter a valid city");
+    input.value = "";
+  }
 };
 
+let map;
 const renderMap = async (lat, lng) => {
   coords = [lat, lng];
+  if (!map) {
+    map = L.map("map").setView(coords, 12);
 
-  let map = L.map("map").setView(coords, 12);
-
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
-
-  let newMarker = new L.marker(coords).addTo(map);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+    L.marker(coords).addTo(map);
+  } else {
+    map.setView(coords, 12);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+    L.marker(coords).addTo(map);
+  }
 };
 
 const wetherLocation = async (lat, lng) => {
@@ -119,7 +133,7 @@ const wetherLocation = async (lat, lng) => {
   return res;
 };
 
-window.addEventListener("load", curentLocalisation);
+currentLocalisation();
 btn.addEventListener("click", customLocation);
 input.addEventListener("keypress", (e) => {
   if (e.key === "Enter") customLocation();
